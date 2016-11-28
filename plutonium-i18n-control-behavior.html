@@ -1,0 +1,58 @@
+<link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+
+<script>
+    window.Plutonium = window.Plutonium || {};
+
+    /**
+     * Extended behavior.
+     *
+     * @polymerBehavior I18nControlBehavior
+     */
+    Plutonium.I18nControlBehaviorImpl = {
+        properties: {
+            sourceLang: {
+                type: String,
+//                    value: 'en'
+            },
+            label: {
+                type: String
+            },
+            locales: {
+                type: Array,
+                notify: true
+            },
+            _selectedLocale: {
+                type: Object,
+                notify: true
+            }
+        },
+        observers: [
+            'observeSourceLang(sourceLang, locales)'
+        ],
+        toggle: function () {
+            if (this._selectedLocale.value !== undefined && this._selectedLocale.value !== null) {
+                this.$.collapse.toggle();
+            }
+        },
+        observeSourceLang: function (sourceLang, locales) {
+            locales.forEach(function (currentValue, index, arr) {
+                if (currentValue.lang === sourceLang) {
+                    this._selectedLocale = currentValue;
+                }
+            }, this);
+        },
+        inSourceLang: function (lang) {
+            return lang.lang === this._selectedLocale.lang;
+        }
+    };
+
+    /**
+     * Behavior that highlights stuff.
+     *
+     * @polymerBehavior
+     */
+    Plutonium.I18nControlBehavior = [
+        Plutonium.I18nControlBehaviorImpl,
+        Polymer.IronFormElementBehavior
+    ];
+</script>

@@ -4,6 +4,7 @@
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="plutonium-i18n-control-behavior.html">
 <link rel="import" href="plutonium-nation-flags.html">
 
 <!--
@@ -48,41 +49,9 @@ Plutonium internationalized text input.
     <script>
         Polymer({
             is: 'plutonium-i18n-input',
-            properties: {
-                sourceLang: {
-                    type: String,
-//                    value: 'en'
-                },
-                label: {
-                    type: String
-                },
-                locales: {
-                    type: Array,
-                    notify: true
-                },
-                _selectedLocale: {
-                    type: Object,
-                    notify: true
-                }
-            },
-            observers: [
-                'observeSourceLang(sourceLang, locales)'
-            ],
-            toggle: function () {
-                if (this._selectedLocale.value !== undefined && this._selectedLocale.value !== null) {
-                    this.$.collapse.toggle();
-                }
-            },
-            observeSourceLang: function (sourceLang, locales) {
-                locales.forEach(function (currentValue, index, arr) {
-                    if (currentValue.lang === sourceLang) {
-                        this._selectedLocale = currentValue;
-                    }
-                }, this);
-            },
-            inSourceLang: function (lang) {
-                return lang.lang === this._selectedLocale.lang;
-            }
+            behaviors: [
+                Plutonium.I18nControlBehavior
+            ]
         });
     </script>
 </dom-module>
