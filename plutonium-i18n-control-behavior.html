@@ -30,6 +30,17 @@
         observers: [
             'observeSourceLang(sourceLang, locales)'
         ],
+        listeners: {
+            'input': '_onInput'
+        },
+//        _onInput: function () {
+//            this._selectedLocale.value = this.$.input.value;
+//        },
+        // Overidden from Polymer.IronValidatableBehavior. Will set the `invalid`
+        // attribute automatically, which should be used for styling.
+        _getValidity: function () {
+            return !!this._selectedLocale.value;
+        },
         toggle: function () {
             if (this._selectedLocale.value !== undefined && this._selectedLocale.value !== null) {
                 this.$.collapse.toggle();
