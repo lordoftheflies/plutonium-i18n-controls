@@ -1,4 +1,5 @@
 <link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+<link rel="import" href="../iron-validatable-behavior/iron-validatable-behavior.html">
 
 <script>
     window.Plutonium = window.Plutonium || {};
@@ -53,6 +54,7 @@
      */
     Plutonium.I18nControlBehavior = [
         Plutonium.I18nControlBehaviorImpl,
+        Polymer.IronValidatableBehavior,
         Polymer.IronFormElementBehavior
     ];
 </script>
