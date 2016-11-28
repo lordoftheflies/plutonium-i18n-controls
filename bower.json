@@ -1,7 +1,7 @@
 {
-  "name": "plutonium-i18n-input",
+  "name": "plutonium-i18n-controls",
   "description": "Plutonium internationalized text input.",
-  "main": "plutonium-i18n-input.html",
+  "main": "plutonium-i18n-controls.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
     "iron-collapse": "PolymerElements/iron-collapse#^1.3.0",
