@@ -1,0 +1,88 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../iron-collapse/iron-collapse.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="plutonium-nation-flags.html">
+
+<!--
+`plutonium-i18n-input`
+Plutonium internationalized text input.
+
+@demo demo/index.html 
+-->
+
+<dom-module id="plutonium-i18n-input">
+    <template>
+        <style include="iron-flex iron-flex-alignment">
+            :host {
+                display: block;
+            }
+
+            :host iron-icon.flag {
+                /*                width: 16px;
+                                height: 16px;*/
+                border-style: solid;
+                border-color: gainsboro;
+                border-width: thin;
+                margin-right: 4px;
+            }
+        </style>
+        <div class="layout horizontal center">
+            <paper-input class="flex" label="[[label]]" value="{{_selectedLocale.value}}"></paper-input>
+            <paper-icon-button icon="plutonium-nation-flags:[[_selectedLocale.lang]]" on-tap="toggle"></paper-icon-button>
+        </div>
+        <iron-collapse id="collapse">
+            <div class="collapse-content layout vertical">
+                <template is="dom-repeat" items="[[locales]]" as="lang">
+                    <div class="layout horizontal center" hidden$="[[inSourceLang(lang)]]">
+                         <iron-icon icon="plutonium-nation-flags:[[lang.lang]]" class="flag"></iron-icon>
+                        <paper-input class="flex" value="{{lang.value}}"></paper-input>
+                    </div>
+                </template>
+            </div>
+        </iron-collapse>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'plutonium-i18n-input',
+            properties: {
+                sourceLang: {
+                    type: String,
+//                    value: 'en'
+                },
+                label: {
+                    type: String
+                },
+                locales: {
+                    type: Array,
+                    notify: true
+                },
+                _selectedLocale: {
+                    type: Object,
+                    notify: true
+                }
+            },
+            observers: [
+                'observeSourceLang(sourceLang, locales)'
+            ],
+            toggle: function () {
+                if (this._selectedLocale.value !== undefined && this._selectedLocale.value !== null) {
+                    this.$.collapse.toggle();
+                }
+            },
+            observeSourceLang: function (sourceLang, locales) {
+                locales.forEach(function (currentValue, index, arr) {
+                    if (currentValue.lang === sourceLang) {
+                        this._selectedLocale = currentValue;
+                    }
+                }, this);
+            },
+            inSourceLang: function (lang) {
+                return lang.lang === this._selectedLocale.lang;
+            }
+        });
+    </script>
+</dom-module>
