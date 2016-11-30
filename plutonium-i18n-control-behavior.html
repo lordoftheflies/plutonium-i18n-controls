@@ -25,10 +25,17 @@
             _selectedLocale: {
                 type: Object,
                 notify: true
+            },
+            value: {
+                type: Object,
+                notify: true,
+                reflectToAttribute: true,
+                value: {}
             }
         },
         observers: [
-            'observeSourceLang(sourceLang, locales)'
+            'observeSourceLang(sourceLang, locales)',
+            'observeValue(locales.*)'
         ],
         listeners: {
 //            'input': '_onInput'
@@ -51,6 +58,12 @@
                 if (currentValue.lang === sourceLang) {
                     this._selectedLocale = currentValue;
                 }
+            }, this);
+        },
+        observeValue: function (changeRecord) {
+            var currentValue = {};
+            this.locales.forEach(function (currentValue, index, arr) {
+                currentValue[currentValue.lang] = currentValue.value;
             }, this);
         },
         inSourceLang: function (lang) {
